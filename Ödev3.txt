@@ -1,0 +1,259 @@
+#include <iostream>
+#include <ctime>
+#include <Windows.h>
+using namespace std;
+int holder = 0;
+struct sahne
+{
+	int genislik;
+	int yukseklik;
+	char karakterDegiskeni;
+};
+
+void gotoxy(int x, int y)
+{
+	COORD coord;
+	coord.X = x;
+	coord.Y = y;
+
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+sahne sh;
+void sahneOlustur()
+{
+	int x;
+	int y;
+	char z;
+
+	srand(time(0));
+	y = rand() % 10 + 20;
+	x = rand() % 3;
+	z = rand() % 5;
+	char karakterDizisi[5] = { '*','#','$','+','@' };
+	if (holder < 1)
+	{
+		int sayiDizisi[3] = { 30,40,50 };
+		sh.genislik = sayiDizisi[x];
+		sh.yukseklik = y;
+		sh.karakterDegiskeni = karakterDizisi[z];
+		holder++;
+	}
+}
+
+void sahneCiz()
+{
+	
+
+	for (int i = 0; i < sh.genislik; i++)
+	{
+		cout << sh.karakterDegiskeni;
+
+	}
+
+	for (int i = 0; i < sh.yukseklik; i++)
+	{
+		gotoxy(sh.genislik - 1, sh.yukseklik-i-1);
+		cout << sh.karakterDegiskeni << endl;
+
+	}
+
+
+	for (int i = 0; i < sh.genislik; i++)
+	{
+		gotoxy(sh.genislik - i-1,sh.yukseklik-1);
+		cout << sh.karakterDegiskeni;
+
+	}
+
+	for (int i = 0; i < sh.yukseklik; i++)
+	{
+		gotoxy(0, sh.yukseklik-1-i);
+		cout << sh.karakterDegiskeni;
+
+	}
+
+}
+
+struct LSekli
+{
+	int x;
+	int y;
+	int boyut;
+	char LSekliKarakteri;
+};
+
+LSekli sv;
+void LSekliOlustur()
+{
+	int a;
+	srand(time(0));
+	a = rand() % 19;
+	int sayiDizisi[19] = { 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 };
+	sv.x = sayiDizisi[a];
+	sv.y = 3;
+
+	int c;
+	c = rand() % 4;
+	int boyutDizisi[4] = { 3,4,5,6  };
+	sv.boyut = boyutDizisi[c];
+
+	int d;
+	srand(time(0));
+	d= rand() % 5;
+	int karakterDizisiL[5] = { '*','#','$','+','@' };
+	sv.LSekliKarakteri = karakterDizisiL[d];
+}
+
+void LSekliCizme()
+{
+	int cx = sv.x;
+	int cy = sv.y;
+
+
+	if (sv.boyut % 2 == 1)
+	{
+	
+
+		for (int i = 0; i < sv.boyut / 2; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cx++;
+		}
+
+		for (int i = 0; i < sv.boyut / 2; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cy++;
+		}
+
+		for (int i = 0; i < sv.boyut / 2; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cx++;
+		}
+
+		for (int i = 0; i < sv.boyut / 2; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cy++;
+		}
+
+		for (int i = 0; i < sv.boyut - 1; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cx--;
+		}
+
+		for (int i = 0; i < sv.boyut - 1; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cy--;
+		}
+	}
+
+	if (sv.boyut % 2 == 0)
+	{
+
+
+		for (int i = 0; i < (sv.boyut+1)/2; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cx++;
+		}
+
+		for (int i = 0; i < (sv.boyut-1) / 2+1; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cy++;
+		}
+
+		for (int i = 0; i < (sv.boyut - 1) / 2; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cx++;
+		}
+
+		for (int i = 0; i < (sv.boyut+1)/2; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cy++;
+		}
+
+		for (int i = 0; i < sv.boyut - 1; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cx--;
+		}
+
+		for (int i = 0; i < sv.boyut ; i++)
+		{
+			gotoxy(cx, cy);
+
+			cout << sv.LSekliKarakteri;
+			cy--;
+		}
+	}
+}
+
+void LSekliAsagiGotur()
+{
+	sv.y++;
+}
+
+
+int main()
+{
+	
+	
+	
+	sahneOlustur();
+	
+	while (true)
+	{
+		
+		LSekliOlustur();
+		int j = sv.y+sv.boyut+2;
+		while (!(j == sh.yukseklik))
+		{
+
+			system("cls");
+			
+			sahneCiz();
+
+			LSekliCizme();
+			
+			LSekliAsagiGotur();
+
+
+			
+			Sleep(100);
+			
+			j++;
+		}
+	}
+
+
+
+}
